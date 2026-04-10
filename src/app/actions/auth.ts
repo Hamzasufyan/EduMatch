@@ -64,3 +64,45 @@ export async function signOut() {
   revalidatePath("/", "layout");
   redirect("/auth");
 }
+
+const VALID_ROLES = ["student", "parent", "tutor"] as const;
+type Role = (typeof VALID_ROLES)[number];
+
+export async function setRole(formData: FormData) {
+  const role = formData.get("role");
+
+  if (typeof role !== "string" || !VALID_ROLES.includes(role as Role)) {
+    return { error: "Please choose a valid role." };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { error: "You must be signed in to choose a role." };
+  }
+
+  // If a row already exists, don't overwrite it — just move on.
+  const { data: existing } = await supabase
+    .from("users")
+    .select("id")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (!existing) {
+    const { error: insertError } = await supabase.from("users").insert({
+      id: user.id,
+      email: user.email,
+      role,
+    });
+
+    if (insertError) {
+      return { error: insertError.message };
+    }
+  }
+
+  revalidatePath("/", "layout");
+  return { success: true };
+}

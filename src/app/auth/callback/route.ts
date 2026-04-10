@@ -10,6 +10,25 @@ export async function GET(request: Request) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      // If this user has no public.users row yet (typical for first-time
+      // OAuth sign-ins), send them through the role-selection step before
+      // letting them into the app.
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        const { data: existing } = await supabase
+          .from("users")
+          .select("id")
+          .eq("id", user.id)
+          .maybeSingle();
+
+        if (!existing) {
+          return NextResponse.redirect(`${origin}/auth/choose-role`);
+        }
+      }
+
       return NextResponse.redirect(`${origin}${next}`);
     }
   }
