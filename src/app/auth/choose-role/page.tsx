@@ -28,7 +28,7 @@ export default async function ChooseRolePage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 relative">
       <div
-        className="fixed inset-0 z-0 bg-cover bg-center opacity-30 dark:opacity-20 pointer-events-none"
+        className="fixed inset-0 z-0 bg-cover bg-center opacity-30 pointer-events-none"
         style={{ backgroundImage: "url('/katara.jpg')" }}
       />
       <div className="w-full max-w-md relative z-10">
@@ -37,12 +37,12 @@ export default async function ChooseRolePage() {
             <GraduationCap className="h-7 w-7 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-[#8A1538]">Welcome to EduMatch</h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-500">
             Tell us how you&apos;ll be using EduMatch so we can personalize your experience.
           </p>
         </div>
 
-        <Card className="border-gray-200 dark:border-gray-700 shadow-sm">
+        <Card className="border-gray-200 shadow-sm">
           <CardHeader className="pb-4">
             <RolePicker />
           </CardHeader>

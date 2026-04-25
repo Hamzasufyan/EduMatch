@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { setRole } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { ProfileFields } from "@/components/auth/profile-fields";
 import { GraduationCap, BookOpen, Loader2 } from "lucide-react";
 
 type RoleCategory = "learner" | "tutor" | null;
@@ -17,7 +18,7 @@ export function RolePicker() {
   const [roleCategory, setRoleCategory] = useState<RoleCategory>(null);
   const [subRole, setSubRole] = useState<"student" | "parent">("student");
 
-  async function handleSubmit() {
+  async function handleSubmit(formData: FormData) {
     setError(null);
 
     if (!roleCategory) {
@@ -26,8 +27,6 @@ export function RolePicker() {
     }
 
     const role: Role = roleCategory === "tutor" ? "tutor" : subRole;
-
-    const formData = new FormData();
     formData.set("role", role);
 
     setLoading(true);
@@ -123,6 +122,12 @@ export function RolePicker() {
             </label>
           </div>
         </div>
+      )}
+
+      {roleCategory && (
+        <ProfileFields
+          role={roleCategory === "tutor" ? "tutor" : subRole}
+        />
       )}
 
       {error && <p className="text-sm text-red-500">{error}</p>}

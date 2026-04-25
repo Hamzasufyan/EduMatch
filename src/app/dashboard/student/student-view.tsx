@@ -7,70 +7,36 @@ import {
   Search,
   BookOpen,
   Clock,
-  UserCircle,
   MessageSquare,
   Filter,
 } from "lucide-react";
 import { GraduationCap } from "lucide-react";
+import { UserMenu } from "@/components/user-menu";
 
-const MOCK_TUTORS = [
-  {
-    id: 1,
-    name: "Dr. Fatima Al-Mansouri",
-    subject: "Mathematics",
-    specialties: ["Algebra", "Calculus", "Statistics"],
-    location: "Doha, West Bay",
-    stars: 47,
-    hourlyRate: "QAR 200",
-    experience: "8 years",
-    availability: "Mon-Fri, Evenings",
-    bio: "PhD in Applied Mathematics from Qatar University. Specializing in helping students build strong foundations and excel in exams.",
-    avatar: "FA",
-  },
-  {
-    id: 2,
-    name: "James Wilson",
-    subject: "Computer Science",
-    specialties: ["Python", "Java", "Data Structures"],
-    location: "Online",
-    stars: 32,
-    hourlyRate: "QAR 180",
-    experience: "5 years",
-    availability: "Flexible Schedule",
-    bio: "Software engineer turned educator. I make complex CS concepts simple and fun with hands-on projects.",
-    avatar: "JW",
-  },
-  {
-    id: 3,
-    name: "Noura Al-Khater",
-    subject: "English Language",
-    specialties: ["IELTS Prep", "Academic Writing", "Conversation"],
-    location: "Al Rayyan",
-    stars: 61,
-    hourlyRate: "QAR 150",
-    experience: "10 years",
-    availability: "Weekends & Evenings",
-    bio: "Certified IELTS trainer with a passion for helping students achieve their target band scores. Native-level fluency.",
-    avatar: "NK",
-  },
-  {
-    id: 4,
-    name: "Omar Hassan",
-    subject: "Physics",
-    specialties: ["Mechanics", "Thermodynamics", "Exam Prep"],
-    location: "Doha, Al Sadd",
-    stars: 25,
-    hourlyRate: "QAR 220",
-    experience: "6 years",
-    availability: "Mon-Wed, Mornings",
-    bio: "Former high school physics teacher. I focus on building intuition through real-world examples and experiments.",
-    avatar: "OH",
-  },
-];
+type Tutor = {
+  id: number;
+  name: string;
+  subject: string;
+  specialties: string[];
+  location: string;
+  stars: number;
+  hourlyRate: string;
+  experience: string;
+  availability: string;
+  bio: string;
+  avatar: string;
+};
+
+const MOCK_TUTORS: Tutor[] = [];
 
 const SUBJECTS = ["All Subjects", "Mathematics", "Computer Science", "English Language", "Physics", "Chemistry", "Biology"];
 
-export default function StudentView() {
+type StudentViewProps = {
+  displayName: string;
+  email: string | null;
+};
+
+export default function StudentView({ displayName, email }: StudentViewProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("All Subjects");
   const [starredTutors, setStarredTutors] = useState<Set<number>>(new Set());
@@ -105,7 +71,7 @@ export default function StudentView() {
     <div className="min-h-screen bg-background font-sans relative">
       {/* Katara Cultural Village background */}
       <div
-        className="fixed inset-0 z-0 bg-cover bg-center opacity-30 dark:opacity-20 pointer-events-none"
+        className="fixed inset-0 z-0 bg-cover bg-center opacity-30 pointer-events-none"
         style={{ backgroundImage: "url('/katara.jpg')" }}
       />
       {/* Navigation */}
@@ -114,10 +80,7 @@ export default function StudentView() {
           <GraduationCap className="h-8 w-8 text-[#8A1538]" />
           <span className="text-2xl font-bold text-[#8A1538]">EduMatch</span>
         </div>
-        <div className="flex items-center space-x-4">
-          <span className="text-sm text-muted-foreground hidden md:block">Welcome, Student</span>
-          <UserCircle className="h-8 w-8 text-muted-foreground" />
-        </div>
+        <UserMenu displayName={displayName} email={email} />
       </nav>
 
       <main className="max-w-6xl mx-auto px-4 py-8 relative z-10">
@@ -178,7 +141,7 @@ export default function StudentView() {
               <div className="p-6">
                 {/* Tutor Header */}
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="h-14 w-14 rounded-full bg-[#8A1538]/10 dark:bg-[#8A1538]/20 flex items-center justify-center text-[#8A1538] font-bold text-lg flex-shrink-0">
+                  <div className="h-14 w-14 rounded-full bg-[#8A1538]/10 flex items-center justify-center text-[#8A1538] font-bold text-lg flex-shrink-0">
                     {tutor.avatar}
                   </div>
                   <div className="flex-grow min-w-0">
@@ -218,7 +181,7 @@ export default function StudentView() {
                   {tutor.specialties.map((specialty) => (
                     <span
                       key={specialty}
-                      className="bg-[#8A1538]/10 dark:bg-[#8A1538]/15 text-[#8A1538] dark:text-[#c4a6a6] text-xs font-medium px-2.5 py-1 rounded-full"
+                      className="bg-[#8A1538]/10 text-[#8A1538] text-xs font-medium px-2.5 py-1 rounded-full"
                     >
                       {specialty}
                     </span>

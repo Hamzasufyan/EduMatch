@@ -11,7 +11,7 @@ export default function AuthPage() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 relative">
       {/* Katara Cultural Village background */}
       <div
-        className="fixed inset-0 z-0 bg-cover bg-center opacity-30 dark:opacity-20 pointer-events-none"
+        className="fixed inset-0 z-0 bg-cover bg-center opacity-30 pointer-events-none"
         style={{ backgroundImage: "url('/katara.jpg')" }}
       />
       <div className="w-full max-w-md relative z-10">
@@ -21,13 +21,13 @@ export default function AuthPage() {
             <GraduationCap className="h-7 w-7 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-[#8A1538]">EduMatch</h1>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-sm text-gray-500">
             Find the perfect tutor for your learning journey
           </p>
         </div>
 
         {/* Auth Card */}
-        <Card className="border-gray-200 dark:border-gray-700 shadow-sm">
+        <Card className="border-gray-200 shadow-sm">
           <CardHeader className="pb-4">
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
@@ -47,7 +47,7 @@ export default function AuthPage() {
           <CardContent />
         </Card>
 
-        <p className="mt-6 text-center text-xs text-gray-400 dark:text-gray-500">
+        <p className="mt-6 text-center text-xs text-gray-400">
           By continuing, you agree to EduMatch&apos;s Terms of Service and Privacy Policy.
         </p>
       </div>

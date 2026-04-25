@@ -3,7 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle } from "lucide-react";
 
-export default function AuthCodeError() {
+export default async function AuthCodeError({
+  searchParams,
+}: {
+  searchParams: Promise<{ message?: string }>;
+}) {
+  const { message } = await searchParams;
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
       <Card className="w-full max-w-md border-gray-200 shadow-sm">
@@ -17,6 +23,11 @@ export default function AuthCodeError() {
           <p className="mt-2 text-sm text-gray-600">
             Something went wrong while confirming your account. The link may have expired or already been used.
           </p>
+          {message && (
+            <p className="mt-2 text-xs text-red-400 font-mono break-all">
+              {message}
+            </p>
+          )}
           <Link href="/auth">
             <Button className="mt-6 bg-blue-600 hover:bg-blue-700 text-white">
               Back to Login

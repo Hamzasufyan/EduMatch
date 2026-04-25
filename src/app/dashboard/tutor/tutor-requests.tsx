@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import {
-  UserCircle,
   Lock,
   Unlock,
   GraduationCap,
@@ -10,7 +9,7 @@ import {
   Mail,
   Phone
 } from "lucide-react";
-import { signOut } from "@/app/actions/auth";
+import { UserMenu } from "@/components/user-menu";
 
 // Mock data for student requests
 const MOCK_REQUESTS = [
@@ -49,14 +48,19 @@ const MOCK_REQUESTS = [
   }
 ];
 
-export default function TutorRequestsPage() {
+type TutorRequestsPageProps = {
+  displayName: string;
+  email: string | null;
+};
+
+export default function TutorRequestsPage({ displayName, email }: TutorRequestsPageProps) {
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   return (
     <div className="min-h-screen bg-background font-sans relative" dir="ltr">
       {/* Katara Cultural Village background */}
       <div
-        className="fixed inset-0 z-0 bg-cover bg-center opacity-30 dark:opacity-20 pointer-events-none"
+        className="fixed inset-0 z-0 bg-cover bg-center opacity-30 pointer-events-none"
         style={{ backgroundImage: "url('/katara.jpg')" }}
       />
 
@@ -67,14 +71,7 @@ export default function TutorRequestsPage() {
           <span className="text-2xl font-bold text-[#8A1538]">EduMatch</span>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <span className="text-sm text-muted-foreground hidden md:block">Welcome, Tutor</span>
-          <form action={signOut}>
-            <button type="submit" className="text-muted-foreground hover:text-[#8A1538] transition-colors">
-              <UserCircle className="h-8 w-8" />
-            </button>
-          </form>
-        </div>
+        <UserMenu displayName={displayName} email={email} />
       </nav>
 
       <main className="max-w-6xl mx-auto px-4 py-8 relative z-10">
@@ -114,7 +111,7 @@ export default function TutorRequestsPage() {
             <p className="text-muted-foreground mt-1">Students actively looking for tutors in your subjects.</p>
           </div>
           {isSubscribed && (
-            <span className="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+            <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200">
               Premium Active
             </span>
           )}
@@ -126,7 +123,7 @@ export default function TutorRequestsPage() {
             <div key={request.id} className="bg-card rounded-xl shadow-sm border border-border overflow-hidden flex flex-col hover:shadow-md transition-shadow">
 
               {/* Card Header */}
-              <div className="p-5 border-b border-border bg-[#8A1538]/5 dark:bg-[#8A1538]/10">
+              <div className="p-5 border-b border-border bg-[#8A1538]/5">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-bold text-lg text-foreground">{request.subject}</h3>
                   <span className="text-xs font-medium text-muted-foreground bg-background px-2 py-1 rounded-md border border-border">
@@ -186,7 +183,7 @@ export default function TutorRequestsPage() {
                       <Lock className="w-6 h-6 text-foreground mb-2" />
                       <button
                         onClick={() => setIsSubscribed(true)}
-                        className="bg-gray-900 hover:bg-black dark:bg-white dark:hover:bg-gray-200 dark:text-gray-900 text-white text-xs font-semibold py-2 px-4 rounded-full transition-colors"
+                        className="bg-gray-900 hover:bg-black text-white text-xs font-semibold py-2 px-4 rounded-full transition-colors"
                       >
                         Subscribe to View
                       </button>

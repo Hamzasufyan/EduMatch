@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ProfileFields } from "@/components/auth/profile-fields";
 import { GraduationCap, BookOpen, Loader2 } from "lucide-react";
 
 type RoleCategory = "learner" | "tutor" | null;
@@ -51,10 +52,17 @@ export function SignupForm() {
     if (result?.error) {
       setError(result.error);
       setLoading(false);
-    } else {
+      return;
+    }
+
+    if (result?.needsEmailConfirmation) {
       setSuccess(true);
       setLoading(false);
+      return;
     }
+
+    // Session was created immediately — go straight to the dashboard.
+    router.push("/dashboard");
   }
 
   async function handleGoogleSignUp() {
@@ -176,6 +184,12 @@ export function SignupForm() {
         </div>
       )}
 
+      {roleCategory && (
+        <ProfileFields
+          role={roleCategory === "tutor" ? "tutor" : subRole}
+        />
+      )}
+
       <div className="space-y-2">
         <Label htmlFor="signup-email">Email</Label>
         <Input
@@ -230,7 +244,7 @@ export function SignupForm() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-gray-200 dark:border-gray-700" />
+          <span className="w-full border-t border-gray-200" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-background px-2 text-gray-400">Or</span>
