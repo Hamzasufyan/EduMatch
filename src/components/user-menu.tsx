@@ -81,8 +81,8 @@ export function UserMenu({ displayName, email }: UserMenuProps) {
         </Menu.Trigger>
 
         <Menu.Portal>
-          <Menu.Positioner sideOffset={8} align="end">
-            <Menu.Popup className="z-50 min-w-[240px] origin-[var(--transform-origin)] rounded-xl border border-border bg-card p-1.5 text-card-foreground shadow-xl shadow-black/5 outline-none data-[starting-style]:scale-95 data-[starting-style]:opacity-0 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 transition-[transform,opacity] duration-150">
+          <Menu.Positioner sideOffset={8} align="end" className="z-[100]">
+            <Menu.Popup className="min-w-[240px] origin-[var(--transform-origin)] rounded-xl border border-border bg-card p-1.5 text-card-foreground shadow-xl shadow-black/5 outline-none data-[starting-style]:scale-95 data-[starting-style]:opacity-0 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 transition-[transform,opacity] duration-150">
               <div className="px-3 py-2.5 border-b border-border mb-1">
                 <p className="text-sm font-semibold text-foreground truncate">
                   {displayName}
